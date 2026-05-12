@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZincLang – Creating and using libraries</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f5f7fa;
+            color: #1e2a3a;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        nav a:hover { color: #e67e22; }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h2 {
+            margin: 1.5rem 0 1rem 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #e67e22;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+        h3 {
+            margin: 1rem 0 0.5rem 0;
+            color: #e67e22;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;        /* light text */
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        code {
+            background: #f0f0f0;    /* light gray */
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #1e2a3a;         /* dark text */
+        }
+        /* For code inside pre, override to match pre background */
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .tip {
+            background: #b5b1b1;
+            border-left: 4px solid #2e7d32;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .warning {
+            background: #fff3e0;
+            border-left: 4px solid #e67e22;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2c3e50;
+            color: white;
+            margin-top: 3rem;
+        }
+        footer a { color: #e67e22; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📚 ZincLang Libraries</h1>
+        <p>Create, share, and use modules – the easy way.</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="docs.html">Docs</a>
+        <a href="playground.html">Playground</a>
+        <a href="libraries.html">Libraries</a>
+        <a href="https://github.com/AlexanderXinarxZenDev/ZincLang" target="_blank">GitHub</a>
+    </nav>
+
+    <div class="container">
+        <section>
+            <h2>📦 What is a ZincLang library?</h2>
+            <p>A ZincLang library is simply a <code>.zc</code> file (or a folder of files) that exports functions, variables, or classes using the <code>export</code> statement. Anyone can import it with <code>import &lt;name&gt;;</code> and access the exported members via the module name.</p>
+            <div class="tip">
+                ✅ <strong>No special packaging tools needed</strong> – a single file is enough. For larger libraries, you can split into multiple files and have one main entry point that re‑exports.
+            </div>
+        </section>
+
+        <section>
+            <h2>🔧 Creating your own library</h2>
+            <h3>1. Write your module</h3>
+            <p>Create a file, e.g., <code>mylib.zc</code>, and define your functions:</p>
+            <pre><code>// mylib.zc
+func greet(name) {
+    Print("Hello, " + name + "!");
+}
+
+func farewell(name) {
+    Print("Goodbye, " + name + ".");
+}
+export greet;
+export farewell;</code></pre>
+
+            <h3>2. Export what users need</h3>
+            <p>Use the <code>export</code> statement <strong>after</strong> defining the item:</p>
+            <pre><code>
+func add(a, b) { 
+    return a + b; 
+}
+export add;   // now it's visible when imported
+                </code></pre>
+            <div class="warning">
+                ⚠️ Order matters: <code>export</code> looks for a name in the current environment. Define your function/variable/class first, then export it.
+            </div>
+
+            <h3>3. (Optional) Add a manifest <code>zinc.toml</code></h3>
+            <p>For future package managers (ZPM), you may include a manifest:</p>
+            <pre><code>[package]
+name = "mylib"
+version = "1.0.0"
+author = "Your Name"
+description = "My awesome Zinc library"
+
+[lib]
+path = "mylib.zc"   # main entry point</code></pre>
+            <p>Currently, the manifest is not required; the interpreter only reads <code>.zc</code> files.</p>
+        </section>
+
+        <section>
+            <h2>📥 Using someone else's library</h2>
+            <p>To use a Zinc library, you need to place its <code>.zc</code> file where ZincLang can find it.</p>
+
+            <h3>Method 1 – Copy to your project folder</h3>
+            <p>Place the <code>.zc</code> file next to your script, then import:</p>
+            <pre><code>// main.zc
+import mylib;
+
+mylib.greet("Zinc");</code></pre>
+
+            <h3>Method 2 – Use a <code>lib/</code> subdirectory</h3>
+            <p>Create a folder named <code>lib</code> in your project root, put libraries there, and ZincLang will automatically find them.</p>
+            <pre><code>your_project/
+├── lib/
+│   └── mylib.zc
+└── main.zc</code></pre>
+
+            <h3>Method 3 – Set the <code>ZINC_PATH</code> environment variable</h3>
+            <p>Define a global library folder (e.g., <code>C:\zinc_libs</code>) and add it to <code>ZINC_PATH</code> (semicolon‑separated on Windows).</p>
+            <pre><code>set ZINC_PATH=C:\zinc_libs</code></pre>
+            <p>Then any script can import libraries from that folder without copying.</p>
+        </section>
+
+        <section>
+            <h2>🌐 Sharing your library – The official ZLiP index</h2>
+            <p>We are building the <strong>ZincLang Index of Packages (ZLiP)</strong> – a central registry. Currently, you can share your library by:</p>
+            <ul>
+                <li>Hosting it on <strong>GitHub</strong> (public or private).</li>
+                <li>Providing a direct download link to the <code>.zc</code> file.</li>
+                <li>Submitting a pull request to the <a href="#">official <code>zinclang_lib</code> repository</a> (once established).</li>
+            </ul>
+            <p>We recommend you create a GitHub repository named <code>zinc-&lt;library-name&gt;</code> (e.g., <code>zinc-math</code>) and include a <code>README.md</code> with usage examples.</p>
+
+            <div class="tip">
+                💡 <strong>Future: ZPM</strong> – We plan to release <code>zpm</code> (Zinc package manager) in version 5.x. It will allow <code>zpm install math</code> to automatically download and place libraries.
+            </div>
+        </section>
+
+        <section>
+            <h2>🧪 Example: Using a real math library</h2>
+            <p>Assume you downloaded <code>math.zc</code> from the official repository:</p>
+            <pre><code>// math.zc
+func add(a, b) { return a + b; }
+func mul(a, b) { return a * b; }
+func sqrt(x) { return x ** 0.5; }   // hypothetical
+
+export add;
+export mul;
+export sqrt;
+
+</code></pre>
+
+            <p>In your script:</p>
+            <pre><code>import math;
+Print(math.add(5, 3));     // 8
+Print(math.mul(4, 2));     // 8
+Print(math.sqrt(16));      // 4.0</code></pre>
+        </section>
+
+        <section>
+            <h2>🤝 Contributing to the ecosystem</h2>
+            <p>We welcome community libraries! To publish your library as “official” (listed on this site and in the index), please:</p>
+            <ol>
+                <li>Ensure your library is a single <code>.zc</code> file with clear exports.</li>
+                <li>Write a short README with installation and usage instructions.</li>
+                <li>Add a <code>zinc.toml</code> manifest (optional but recommended).</li>
+                <li>Open a pull request to the <a href="#">zinclang_lib repository</a> (coming soon).</li>
+            </ol>
+            <p>All contributions must follow the <strong>Contributor Promise</strong> – see <code>CONTRIBUTING.md</code>.</p>
+        </section>
+
+        <section>
+            <h2>📚 Existing official libraries</h2>
+            <ul>
+                <li><strong>math</strong> – basic arithmetic, trigonometry (planned).</li>
+                <li><strong>json</strong> – parse and generate JSON (planned).</li>
+                <li><strong>fileio</strong> – file system utilities (planned).</li>
+                <li><strong>http</strong> – simple HTTP client (planned).</li>
+            </ul>
+            <p>Check <a href="https://github.com/AlexanderXinarxZenDev/zinclang_lib" target="_blank">github.com/AlexanderXinarxZenDev/zinclang_lib</a> for availability.</p>
+        </section>
+
+        <div class="tip">
+            🚀 <strong>Pro tip:</strong> You can already use any Java library directly via <code>import java.package.Class;</code>. This gives you access to tens of thousands of libraries without any Zinc wrapper!
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 ZincLang Authors – <a href="https://github.com/AlexanderXinarxZenDev/ZincLang/blob/main/LICENSE">Business Source License 1.1</a></p>
+        <p>⚡ Build, share, and import libraries seamlessly.</p>
+    </footer>
+</body>
+</html>

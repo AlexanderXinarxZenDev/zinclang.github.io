@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZincLang – Language Documentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f5f7fa;
+            color: #1e2a3a;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        nav a:hover { color: #e67e22; }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        h2 {
+            margin: 1.5rem 0 1rem 0;
+            color: #2c3e50;
+            border-bottom: 2px solid #e67e22;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+        }
+        h3 { margin: 1rem 0 0.5rem 0; color: #e67e22; }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        pre code {
+            background: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .tip {
+            background: #e8f5e9;
+            border-left: 4px solid #2e7d32;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        .note {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2c3e50;
+            color: white;
+            margin-top: 3rem;
+        }
+        footer a { color: #e67e22; text-decoration: none; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th { background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ZincLang Documentation</h1>
+        <p>The complete guide to the ZincLang programming language.</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="docs.html">Docs</a>
+        <a href="playground.html">Playground</a>
+        <a href="libraries.html">Libraries</a>
+        <a href="https://github.com/AlexanderXinarxZenDev/ZincLang" target="_blank">GitHub</a>
+    </nav>
+
+    <div class="container">
+        <section>
+            <h2>Getting Started</h2>
+            <p>ZincLang is a statically‑typed, JVM‑based language with Python‑inspired syntax and seamless Java interop. To run a Zinc script:</p>
+            <pre><code># install ZincLang (Windows .exe or build from source)
+ZincLang.exe script.zc</code></pre>
+            <p>Or start the REPL: <code>ZincLang.exe</code> (no arguments).</p>
+        </section>
+
+        <section>
+            <h2>Variables and Types</h2>
+            <p>Variables are declared with a type, then name, optionally initialised.</p>
+            <pre><code>int x = 10;
+float pi = 3.14;
+string name = "Zinc";
+char letter = 'A';
+bool flag = True;
+</code></pre>
+            <p>Types: <code>int</code>, <code>float</code>, <code>string</code>, <code>char</code>, <code>bool</code>,  <code>void</code> (function return only)
+        </section>
+
+        <section>
+            <h2>I/O</h2>
+            <pre><code>Print("Hello world");
+string name = Input("What is your name? ");
+Print("Hello, " + name);</code></pre>
+        </section>
+
+        <section>
+            <h2>Control Flow</h2>
+            <h3>if / else</h3>
+            <pre><code>int x = 10;
+if (x > 5) {
+    Print("big");
+} else if (x == 5) {
+    Print("equal");
+} else {
+    Print("small");
+}</code></pre>
+
+            <h3>while loop</h3>
+            <pre><code>int i = 0;
+while (i < 3) {
+    Print(i);
+    i = i + 1;
+}</code></pre>
+
+            <h3>for loop</h3>
+            <pre><code>for (int i = 0; i < 5; i = i + 1) {
+    Print("i = " + i);
+}</code></pre>
+
+            <h3>break and continue</h3>
+            <pre><code>for (int i = 0; i < 10; i = i + 1) {
+    if (i == 2) continue;
+    if (i == 5) break;
+    Print(i);
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Functions</h2>
+            <p>ZincLang supports two syntaxes: with <code>func</code> (return type optional) or with explicit return type (<code>int</code>/<code>void</code>).</p>
+            <h3>func style</h3>
+            <pre><code>func add(a, b) {
+    return a + b;
+}
+int result = add(3, 4);</code></pre>
+            <h3>Explicit return type</h3>
+            <pre><code>int multiply(int a, int b) {
+    return a * b;
+}
+void sayHello() {
+    Print("Hello");
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>Modules (Import/Export)</h2>
+            <p>Create a module file, e.g., <code>math.zc</code>:</p>
+            <pre><code>func add(a, b) { return a + b; }
+func sub(a, b) { return a - b; }
+export add;
+export sub;</code></pre>
+            <p>Use it in another script:</p>
+            <pre><code>import math;
+Print(math.add(5, 3));   // 8</code></pre>
+            <p>You can also import Java classes directly:</p>
+            <pre><code>import java.util.ArrayList;
+var list = ArrayList();
+list.add("Hello");
+Print(list.get(0));</code></pre>
+        </section>
+
+        <section>
+            <h2>Classes</h2>
+            <pre><code>class Point {
+    int x, y;
+    void init(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    int getX() { return x; }
+}
+
+class Point3D extends Point {
+    int z;
+    void init(int x, int y, int z) {
+        super.init(x, y);
+        this.z = z;
+    }
+}</code></pre>
+            <p>Call methods using <code>@class.method()</code> syntax (dynamic dispatch):</p>
+            <pre><code>var p = Point();
+@p.init(1, 2);
+Print(p.getX());</code></pre>
+        </section>
+
+        <section>
+            <h2>Logical Operators</h2>
+            <pre><code>if (x and y) { ... }
+if (x or y) { ... }
+if (not x) { ... }</code></pre>
+        </section>
+
+        <section>
+            <h2>Error Handling</h2>
+            <p>Currently ZincLang uses runtime error reporting with line numbers. Planned: try/catch blocks.</p>
+        </section>
+
+        <section>
+            <h2>Java Interoperability</h2>
+            <p>Any Java class can be imported and used as if it were a Zinc module:</p>
+            <pre><code>import java.io.File;
+var f = File("test.txt");
+Print(f.getName());
+
+import java.util.HashMap;
+var map = HashMap();
+map.put("key", 42);
+Print(map.get("key"));</code></pre>
+            <p>Java methods and constructors work as expected. Returned objects are wrapped as <code>JavaInstance</code> and support method calls.</p>
+        </section>
+
+        <section>
+            <h2>Command‑line Interface</h2>
+            <pre><code>ZincLang.exe script.zc         # run script
+ZincLang.exe                    # start REPL</code></pre>
+        </section>
+
+        <div class="tip">
+            💡 <strong>Tip:</strong> Use the <code>lib/</code> folder or <code>ZINC_PATH</code> environment variable to store reusable modules globally.
+        </div>
+        <div class="note">
+            📘 <strong>Note:</strong> ZincLang is under active development. Check GitHub for latest features and bug fixes.
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 ZincLang Authors – <a href="https://github.com/AlexanderXinarxZenDev/ZincLang/blob/main/LICENSE">Business Source License 1.1</a></p>
+    </footer>
+</body>
+</html>

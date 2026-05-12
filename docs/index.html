@@ -3,9 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ZincLang – Portable, JVM‑based programming language</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: #f5f7fa;
+            color: #1e2a3a;
+        }
+        header {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        .badge {
+            background: #e67e22;
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+        }
+        nav a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #e67e22;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .hero {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .hero h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #e67e22;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h3 {
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+        }
+        code {
+            background: #ecf0f1;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .install-steps {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #2c3e50;
+            color: white;
+            margin-top: 3rem;
+        }
+        footer a {
+            color: #e67e22;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .container { padding: 0 1rem; }
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <h1>⚡ ZincLang</h1>
+        <div class="tagline">Fast. Explicit. Java‑powered. Portable.</div>
+        <div class="badge">Windows Portable Executable</div>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="docs.html">Docs</a>
+        <a href="playground.html">Playground</a>
+        <a href="libraries.html">Libraries</a>
+        <a href="https://github.com/AlexanderXinarxZenDev/ZincLang" target="_blank">GitHub</a>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Welcome to ZincLang</h2>
+            <p>A modern, statically‑typed language that runs on the JVM. <br> Import any Java library, write clean code, and run it everywhere.</p>
+            <a href="#install" class="btn">⬇️ Download for Windows (Portable .exe)</a>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🧩 Seamless Java Interop</h3>
+                <p>Use any Java class directly: <code>import java.util.ArrayList;</code> – no wrappers, no FFI.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📦 Dynamic Modules</h3>
+                <p>Import Zinc modules (<code>.zc</code>) as namespaces. Export functions, variables, classes.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🚀 Portable .exe (Windows)</h3>
+                <p>One‑click executable bundled with a minimal JRE. No Java installation required.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎯 Strong Typing</h3>
+                <p><code>int x = 10;</code> · <code>float pi = 3.14;</code> · <code>bool flag = True;</code></p>
+            </div>
+            <div class="feature-card">
+                <h3>🔄 Python‑inspired Syntax</h3>
+                <p><code>if/else</code>, <code>while</code>, <code>for</code>, <code>break</code>, <code>continue</code> – familiar and readable.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📚 Built‑in I/O</h3>
+                <p><code>Print("Hello")</code> · <code>Input("Name: ")</code></p>
+            </div>
+        </div>
+
+        <section id="install">
+            <h2>📦 Installation (Windows Portable)</h2>
+            <div class="install-steps">
+                <h3>Option 1 – Download the .exe (recommended for users)</h3>
+                <ol style="margin-left: 1.5rem;">
+                    <li>Go to <a href="https://github.com/AlexanderXinarxZenDev/ZincLang/releases" target="_blank">GitHub Releases</a>.</li>
+                    <li>Download the latest <code>ZincLang.exe</code> (packaged with a JRE).</li>
+                    <li>Place it in any folder – no installation needed.</li>
+                    <li>Double‑click to start the REPL, or run from terminal: <code>ZincLang.exe myscript.zc</code>.</li>
+                </ol>
+                <p><strong>No Java required!</strong> The executable includes everything.</p>
+
+                <h3 style="margin-top: 1.5rem;">Option 2 – Build from source (for developers)</h3>
+                <pre><code>git clone https://github.com/AlexanderXinarxZenDev/ZincLang.git
+cd ZincLang
+javac -d classes zinc\*.java
+java -cp classes zinc.ZincLang</code></pre>
+                <p>Requires JDK 17+.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>✨ First Zinc program</h2>
+            <pre><code>// hello.zc
+Print("Hello, ZincLang!");
+
+int x = 10;
+if (x > 5) {
+    Print("x is greater than 5");
+}</code></pre>
+            <p>Run it: <code>ZincLang.exe hello.zc</code></p>
+        </section>
+
+        <section>
+            <h2>📚 Module example</h2>
+            <p><strong>math.zc</strong> (library)</p>
+            <pre><code>export add;
+func add(a, b) { return a + b; }</code></pre>
+            <p><strong>main.zc</strong></p>
+            <pre><code>import math;
+Print(math.add(3, 4));   // prints 7</code></pre>
+        </section>
+
+        <section>
+            <h2>🔗 Java interop example</h2>
+            <pre><code>import java.util.ArrayList;
+var list = ArrayList();
+list.add("Hello from Java");
+Print(list.get(0));</code></pre>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 ZincLang Authors – <a href="https://github.com/AlexanderXinarxZenDev/ZincLang/blob/main/LICENSE">Business Source License 1.1</a></p>
+        <p>⚡ Portable, fast, and open for contributions.</p>
+    </footer>
 </body>
 </html>
